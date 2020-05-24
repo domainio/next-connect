@@ -38,7 +38,7 @@ exports.signup = async (req, res) => {
     if (err) {
       return res.status(501).send(err.stack);
     }
-    res.json(user);
+    res.json(user.name);
   });
 };
 

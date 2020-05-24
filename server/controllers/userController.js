@@ -1,25 +1,32 @@
-exports.getUsers = () => {};
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
-exports.getAuthUser = () => {};
+exports.getUsers = async (req, res) => {
+  const fields = '_id name email createdAt updatedAt';
+  const users = await User.find().select(fields);
+  res.json(users);
+};
 
-exports.getUserById = () => {};
+exports.getAuthUser = () => { };
 
-exports.getUserProfile = () => {};
+exports.getUserById = () => { };
 
-exports.getUserFeed = () => {};
+exports.getUserProfile = () => { };
 
-exports.uploadAvatar = () => {};
+exports.getUserFeed = () => { };
 
-exports.resizeAvatar = () => {};
+exports.uploadAvatar = () => { };
 
-exports.updateUser = () => {};
+exports.resizeAvatar = () => { };
 
-exports.deleteUser = () => {};
+exports.updateUser = () => { };
 
-exports.addFollowing = () => {};
+exports.deleteUser = () => { };
 
-exports.addFollower = () => {};
+exports.addFollowing = () => { };
 
-exports.deleteFollowing = () => {};
+exports.addFollower = () => { };
 
-exports.deleteFollower = () => {};
+exports.deleteFollowing = () => { };
+
+exports.deleteFollower = () => { };
