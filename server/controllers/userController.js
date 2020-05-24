@@ -38,7 +38,7 @@ exports.isUserAuth = async (req, res, next, id) => {
     req.isAuthUser = false;
     return next();
   }
-  req.profile = user;
+  req.profile = Object.assign({}, user);
   const profileId = mongoose.Types.ObjectId(req.profile._id)
   if (profileId.equals(req.profile._id)) {
     req.isAuthUser = true;
@@ -47,22 +47,31 @@ exports.isUserAuth = async (req, res, next, id) => {
   next();
 };
 
-exports.getUserProfile = (req, res) => { 
+exports.getUserProfile = (req, res, next) => {
   if (!req.profile) {
     return res.status(404).json({
-      message:'no user found.'
+      message: 'no user found.'
     })
   }
-  res.json(req.profile);
+  const { profile } = req;
+  res.send(profile);
 };
 
-exports.getUserFeed = () => { };
+exports.getUserFeed = () => {
 
-exports.uploadAvatar = () => { };
+};
 
-exports.resizeAvatar = () => { };
+exports.uploadAvatar = () => {
 
-exports.updateUser = () => { };
+};
+
+exports.resizeAvatar = () => {
+
+};
+
+exports.updateUser = () => {
+
+};
 
 exports.deleteUser = async (req, res) => {
   if (!req.isAuthUser) {
@@ -73,10 +82,29 @@ exports.deleteUser = async (req, res) => {
   res.json(deletedUser);
 };
 
-exports.addFollowing = () => { };
+exports.addFollowing = async (req, res, next) => {
+  const { followId } = req.body;
+  await User.findOneAndUpdate(
+    { _id: req.user._id, },
+    { $push: { following: followId } }
+  )
+  next();
+};
 
-exports.addFollower = () => { };
+exports.addFollower = async (req, res) => {
+  const { followId } = req.body;
+  const user = await User.findOneAndUpdate(
+    { _id: followId },
+    { $push: { followers: req.user._id } },
+    { new: true }
+  )
+  res.json(user);
+};
 
-exports.deleteFollowing = () => { };
+exports.deleteFollowing = () => {
 
-exports.deleteFollower = () => { };
+};
+
+exports.deleteFollower = () => {
+
+};
