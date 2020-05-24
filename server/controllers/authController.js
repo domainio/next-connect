@@ -69,5 +69,5 @@ exports.checkAuth = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  req.redirect('/signin');
+  res.redirect('/signin');
  };
