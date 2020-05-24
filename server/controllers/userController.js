@@ -47,7 +47,14 @@ exports.isUserAuth = async (req, res, next, id) => {
   next();
 };
 
-exports.getUserProfile = () => { };
+exports.getUserProfile = (req, res) => { 
+  if (!req.profile) {
+    return res.status(404).json({
+      message:'no user found.'
+    })
+  }
+  res.json(req.profile);
+};
 
 exports.getUserFeed = () => { };
 
