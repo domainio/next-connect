@@ -26,7 +26,7 @@ router.get("/api/auth/signout", authController.signout);
 /**
  * USER ROUTES: /api/users
  */
-router.param("userId", userController.isUserAuth);
+router.param("userId", userController.getUserById);
 
 router
   .route("/api/users/:userId")
